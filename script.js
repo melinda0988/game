@@ -1,57 +1,57 @@
-var spieler = document.querySelector(".player");
-var playground = document.querySelector(".playground");
-var scoreBoard = document.querySelector(".counter");
-var startGame = document.querySelector(".startGame");
+const spieler = document.querySelector(".player");
+const playground = document.querySelector(".playground");
+let scoreBoard = document.querySelector(".counter");
+const startGame = document.querySelector(".startGame");
 spieler.style.top = 300 + "px";
 spieler.style.left = 700 + "px";
 
-let timerDirection = new Timer(40);
-
-//game over, sobald spieler über diesem punkt im feld ist
-var overLeft = 50;
-var overRight = parseInt(playground.innerHTML.length) - 50;
+let timerDirection = new Timer(20);
 
 //sound
 //var hintergrundmusik = new Audio("GFX/musik.mp3");
 //hintergrundmusik.play();
 
 //punktanzeige
-var counter = 0;
+let counter = 0;
 
 //nach rechts/links bewegen
-var theMovement = 0;
+//let theMovement = 0;
 
 //BEWEGUNG, random zahl 0 oder 1
-let randomBewegung = 0;
 function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random());
 }
 
+//random richtun wechseln
+let randomDirection = Math.floor(Math.random() * 6 + 4);
 //ob nach rechts oder links bewegen
-var direction = getRandomInt(2);
-//um wie viel bewegen
-var movement = 6;
+let direction = getRandomInt(2);
+//console.log(getRandomInt(2));
+//wie schnell bewegen
+const movement = 6;
+
+//nach wie viel die richtung gewechselt wird
+let distance = Math.floor(Math.random() * 1250 + 1000);
 
 function initialMoving() {
   if (timerDirection.ready()) {
     direction = getRandomInt(2);
-  }
-
-  if (direction == 0) {
-    //move right
-    spieler.style.left = parseInt(spieler.style.left) + movement + "px";
-    //bereich für bewegung definieren
-    if (parseInt(spieler.style.left) > 500) {
-      //wenn rand erreicht, bewegung zurücksetzen
-      direction = 1;
-      theMovement = 0;
-    }
-  } else {
-    //move left
-    spieler.style.left = parseInt(spieler.style.left) - movement + "px";
-    if (parseInt(spieler.style.left) < 0) {
-      direction = 0;
-      theMovement = 0;
+    if (direction == 0) {
+      //move right
+      spieler.style.left = parseInt(spieler.style.left) + movement + "px";
+      //bereich für bewegung definieren
+      if (parseInt(spieler.style.left) > distance) {
+        //wenn rand erreicht, bewegung zurücksetzen
+        direction = 1;
+        //theMovement = 0;
+      }
+    } else {
+      //move left
+      spieler.style.left = parseInt(spieler.style.left) - movement + "px";
+      if (parseInt(spieler.style.left) < distance) {
+        direction = 0;
+        //theMovement = 0;
+      }
     }
   }
   //theMovement += movement;
@@ -69,34 +69,30 @@ function loop() {
 
   //game over
   if (
-    parseInt(spieler.style.left) < overLeft ||
-    parseInt(spieler.style.left) > overRight
+    parseInt(spieler.style.left) < 250 ||
+    parseInt(spieler.style.left) > 1000
   ) {
-    //alert("Game over!");
     //location.href = "start.html";
-    //return;
     scoreBoard.textContent = 0;
   }
 
   //steuerung
   if (keyboard(39)) {
-    spieler.style.left = parseInt(spieler.style.left) + 10 + "px";
+    spieler.style.left = parseInt(spieler.style.left) + movement + "px";
   }
   if (keyboard(37)) {
-    spieler.style.left = parseInt(spieler.style.left) - 10 + "px";
+    spieler.style.left = parseInt(spieler.style.left) - movement + "px";
   }
 
   window.requestAnimationFrame(loop);
 }
 
 window.requestAnimationFrame(loop);
-
-//allgemein
-//highscore wird gespeichert und ausgegeben https://michael-karen.medium.com/how-to-save-high-scores-in-local-storage-7860baca9d68
 //Math.floor(Math.random() * 6 + 4);
+//(parseInt(playground.innerHTML.length) -00)
+//theMovement löschen?
 
-//probleme
-//movement flugzeug
-//game over
-//steuerung tastatur
-//counter punkteanzeige
+//todo
+//
+//random bewegung hin und her in angenehmer geschwindigkeit
+//gegensteuern in gleichmässiger geschwindigkeit

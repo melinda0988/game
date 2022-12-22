@@ -5,8 +5,6 @@ const startGame = document.querySelector(".startGame");
 spieler.style.top = 300 + "px";
 spieler.style.left = 700 + "px";
 
-let timerDirection = new Timer(20);
-
 //sound
 //var hintergrundmusik = new Audio("GFX/musik.mp3");
 //hintergrundmusik.play();
@@ -33,28 +31,12 @@ const movement = 6;
 //nach wie viel die richtung gewechselt wird
 let distance = Math.floor(Math.random() * 1250 + 1000);
 
+let timerDirection = new Timer(20);
+
 function initialMoving() {
   if (timerDirection.ready()) {
-    direction = getRandomInt(2);
-    if (direction == 0) {
-      //move right
-      spieler.style.left = parseInt(spieler.style.left) + movement + "px";
-      //bereich für bewegung definieren
-      if (parseInt(spieler.style.left) > distance) {
-        //wenn rand erreicht, bewegung zurücksetzen
-        direction = 1;
-        //theMovement = 0;
-      }
-    } else {
-      //move left
-      spieler.style.left = parseInt(spieler.style.left) - movement + "px";
-      if (parseInt(spieler.style.left) < distance) {
-        direction = 0;
-        //theMovement = 0;
-      }
-    }
+    spieler.style.left = parseInt(spieler.style.left) + 6 + "px";
   }
-  //theMovement += movement;
 }
 
 function loop() {
@@ -96,3 +78,58 @@ window.requestAnimationFrame(loop);
 //
 //random bewegung hin und her in angenehmer geschwindigkeit
 //gegensteuern in gleichmässiger geschwindigkeit
+
+//version 1
+/*let distance = Math.floor(Math.random() * 1250 + 1000);
+
+function initialMoving() {
+  if (timerDirection.ready()) {
+    direction = 0;
+    console.log(direction);
+    if (direction == 0) {
+      //move right
+      spieler.style.left = parseInt(spieler.style.left) + movement + "px";
+      //bereich für bewegung definieren
+      if (parseInt(spieler.style.left) > distance) {
+        //wenn rand erreicht, bewegung zurücksetzen
+        direction = 1;
+        console.log(direction);
+        //theMovement = 0;
+      }
+    } else {
+      //move left
+      spieler.style.left = parseInt(spieler.style.left) - movement + "px";
+      if (parseInt(spieler.style.left) < distance) {
+        direction = 0;
+        //theMovement = 0;
+      }
+    }
+  }
+  //theMovement += movement;
+}*/
+
+//version 2
+/*function initialMoving() {
+  if (timerDirection.ready()) {
+    direction = 0;
+    console.log(direction);
+
+    let distance = Math.floor(Math.random() * 1250 + 1000);
+    console.log(distance);
+
+    //move right
+    //if (parseInt(spieler.style.left) < distance){
+    if (direction == 0) {
+      spieler.style.left = parseInt(spieler.style.left) - movement + "px";
+      direction = 1;
+      console.log(direction);
+      if (direction == 1) {
+        spieler.style.left = parseInt(spieler.style.left) + movement + "px";
+        //direction = 0;
+      }
+    }
+    //move left
+
+    //}
+  }
+}*/
